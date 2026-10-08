@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Skrlr Games — AI-first games studio</title>
+<meta name="description" content="Skrlr Games is an AI-first games studio building agentic game AI, adaptive games that tune themselves to every player, and games native to social platforms.">
+<meta property="og:title" content="Skrlr Games — AI-first games studio">
+<meta property="og:description" content="Agentic characters, adaptive play, and games built for the social feed.">
+<meta property="og:url" content="https://skrlr.com/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://skrlr.com/assets/skrlr-logo.jpg">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="450">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://skrlr.com/assets/skrlr-logo.jpg">
+<meta name="theme-color" content="#05040d">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23c03cff'/%3E%3Cstop offset='1' stop-color='%232fd8ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%2305040d'/%3E%3Cpath d='M8 18 26 26 32 44 38 26 56 18 44 40 32 52 20 40z' fill='none' stroke='url(%23g)' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M24 31q8-6 16 0-8 6-16 0z' fill='url(%23g)'/%3E%3C/svg%3E">
+<style>
+:root{--bg:#05040d;--bg2:#0b0918;--card:rgba(255,255,255,.035);--line:rgba(255,255,255,.08);--txt:#ecebf7;--mut:#a09cb8;--a:#c03cff;--b:#2fd8ff;--grad:linear-gradient(110deg,var(--a),#8a5cff 50%,var(--b))}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--txt);font:16px/1.65 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+nav{position:sticky;top:0;z-index:20;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);background:rgba(5,4,13,.65);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+.brand{font-weight:800;letter-spacing:.14em;font-size:15px}
+.brand span{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.links{display:flex;gap:26px;font-size:14px;color:var(--mut)}
+.links a:hover{color:var(--txt)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 22px;border-radius:999px;font-weight:600;font-size:15px;transition:transform .15s,box-shadow .15s,background .15s}
+.btn-p{background:var(--grad);color:#fff;box-shadow:0 8px 30px -8px rgba(192,60,255,.65)}
+.btn-p:hover{transform:translateY(-1px);box-shadow:0 12px 40px -8px rgba(47,216,255,.6)}
+.btn-g{border:1px solid var(--line);background:var(--card)}
+.btn-g:hover{background:rgba(255,255,255,.07)}
+nav .btn{padding:8px 16px;font-size:14px}
+header{position:relative;padding:40px 0 80px;text-align:center;overflow:hidden}
+header:before{content:"";position:absolute;inset:0;background:radial-gradient(600px 380px at 30% 20%,rgba(192,60,255,.22),transparent 70%),radial-gradient(600px 380px at 70% 20%,rgba(47,216,255,.16),transparent 70%);pointer-events:none}
+header .wrap{position:relative}
+.logo{display:block;width:min(560px,92%);height:auto;margin:0 auto -6px;mix-blend-mode:screen;-webkit-mask-image:radial-gradient(ellipse 62% 62% at 50% 50%,#000 60%,transparent 100%);mask-image:radial-gradient(ellipse 62% 62% at 50% 50%,#000 60%,transparent 100%)}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border:1px solid var(--line);border-radius:999px;background:var(--card);font-size:13px;color:var(--mut);margin-bottom:22px}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--b);box-shadow:0 0 12px var(--b);animation:p 2s infinite}
+@keyframes p{50%{opacity:.35}}
+h1{font-size:clamp(36px,6vw,66px);line-height:1.05;letter-spacing:-.035em;font-weight:800;max-width:900px;margin:0 auto}
+.g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(16px,2vw,19px);color:var(--mut);max-width:700px;margin:20px auto 34px}
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+section{padding:80px 0;position:relative}
+.alt{background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--b);margin-bottom:12px}
+h2{font-size:clamp(28px,4vw,42px);line-height:1.1;letter-spacing:-.025em;font-weight:800;margin-bottom:14px}
+.sub{color:var(--mut);max-width:640px;font-size:17px}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center}
+.loop{display:grid;gap:10px}
+.step{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:rgba(5,4,13,.6)}
+.step b{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11px;color:var(--b);border:1px solid rgba(47,216,255,.35);border-radius:7px;padding:3px 7px;white-space:nowrap;margin-top:2px}
+.step p{color:var(--mut);font-size:14px}
+.step strong{color:var(--txt);font-weight:600}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:36px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:24px;transition:border-color .2s,transform .2s}
+.card:hover{border-color:rgba(192,60,255,.5);transform:translateY(-2px)}
+.card h3{font-size:17px;margin-bottom:6px;letter-spacing:-.01em}
+.card p{color:var(--mut);font-size:14.5px}
+.feature{margin-top:22px;border-radius:18px;padding:26px 28px;border:1px solid rgba(192,60,255,.3);background:linear-gradient(110deg,rgba(192,60,255,.12),rgba(47,216,255,.08))}
+.feature h3{font-size:19px;margin-bottom:6px}
+.feature p{color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;align-items:center}
+.chips em{font-style:normal;font-size:13px;color:var(--mut);margin-right:4px}
+.chip{padding:6px 12px;border-radius:9px;border:1px solid var(--line);background:var(--card);font-size:13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--mut);margin:0 6px 8px 0}
+.tag.on{color:#05040d;background:var(--b);border-color:var(--b)}
+.road{list-style:none;border:1px solid var(--line);border-radius:20px;padding:26px 26px 10px;background:rgba(5,4,13,.6)}
+.road li{position:relative;padding:0 0 18px 30px}
+.road li:before{content:"";position:absolute;left:0;top:5px;width:14px;height:14px;border-radius:50%;border:2px solid var(--a);background:var(--bg)}
+.road li:after{content:"";position:absolute;left:7px;top:22px;bottom:2px;width:2px;background:linear-gradient(var(--a),var(--b));opacity:.35}
+.road li:last-child:after{display:none}
+.road li.now:before{background:var(--b);border-color:var(--b);box-shadow:0 0 14px var(--b)}
+.road small{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--b);font-weight:700}
+.road h4{font-size:16px;margin:2px 0}
+.road p{color:var(--mut);font-size:14px}
+.join{text-align:center}
+.join .box{border-radius:26px;padding:60px 28px;border:1px solid var(--line);background:radial-gradient(520px 260px at 50% 0%,rgba(192,60,255,.2),transparent 70%),var(--bg2)}
+.join .sub{margin:0 auto 28px}
+footer{border-top:1px solid var(--line);padding:30px 0;color:var(--mut);font-size:14px}
+footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+@media(max-width:860px){.links{display:none}.split{grid-template-columns:1fr}section{padding:64px 0}header{padding:24px 0 64px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">SKRLR <span>GAMES</span></a>
+    <div class="links">
+      <a href="#ai">Agentic AI</a>
+      <a href="#social">Social games</a>
+      <a href="#conti">Conti</a>
+    </div>
+    <a class="btn btn-p" href="mailto:hello@skrlr.com?subject=Skrlr%20Games%20private%20beta">Join the beta</a>
+  </div>
+</nav>
+
+<header id="top">
+  <div class="wrap">
+    <img class="logo" src="assets/skrlr-logo.jpg" width="800" height="450" alt="Skrlr Games logo">
+    <div class="pill"><span class="dot"></span>Conti private beta — coming soon</div>
+    <h1>Games that <span class="g">think, remember,<br>and adapt</span> to you.</h1>
+    <p class="lead">Skrlr Games is an AI-first games studio. Our mission: make AI the core mechanic, not a bolt-on, with agentic characters that reason and act, games that tune themselves to every player, and play built natively for the social feed.</p>
+    <div class="cta">
+      <a class="btn btn-p" href="mailto:hello@skrlr.com?subject=Skrlr%20Games%20private%20beta">Join the private beta &rarr;</a>
+      <a class="btn btn-g" href="#ai">What we&rsquo;re building</a>
+    </div>
+  </div>
+</header>
+
+<section id="ai" class="alt">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <div class="eyebrow">AI-first &middot; Agentic game AI</div>
+        <h2>Characters that <span class="g">reason, remember, and act.</span></h2>
+        <p class="sub">We design games from the ground up around AI. Our characters are driven by real AI agents that perceive the world, keep memories, form intentions, and act within the game&rsquo;s rules, so the world reacts to you instead of replaying a script.</p>
+      </div>
+      <div class="loop" aria-label="Agent loop">
+        <div class="step"><b>PERCEIVE</b><p><strong>Read the world</strong>: game state, nearby characters, what you just did.</p></div>
+        <div class="step"><b>REMEMBER</b><p><strong>Keep a history</strong>: past encounters, promises, grudges, and favors.</p></div>
+        <div class="step"><b>REASON</b><p><strong>Decide</strong>: goals and personality shape plans that fit the moment.</p></div>
+        <div class="step"><b>ACT</b><p><strong>Change the world</strong>: actions are checked against game rules, so emergence stays playable.</p></div>
+      </div>
+    </div>
+    <div class="feature">
+      <h3>Adaptive games that tune themselves to each player</h3>
+      <p>An AI director reads how you play and adjusts difficulty, pacing, story beats, and encounters as you go, aiming to keep every session in the sweet spot between challenge and flow, with tension when you&rsquo;re cruising and relief when you&rsquo;re stuck.</p>
+    </div>
+    <div class="chips"><em>How we build:</em><span class="chip">Claude &amp; LLM agents for code + design</span><span class="chip">Local GPU gen for art &amp; animation</span><span class="chip">Godot engine</span><span class="chip">Tiny team, fast iteration</span></div>
+  </div>
+</section>
+
+<section id="social">
+  <div class="wrap">
+    <div class="eyebrow">Social platform games</div>
+    <h2>Games that live <span class="g">where people already are.</span></h2>
+    <p class="sub">Built natively for feeds, chats, and creator communities, not ported to them as an afterthought.</p>
+    <div class="cards">
+      <div class="card"><h3>Short-session &amp; shareable</h3><p>Playable in moments, made to be clipped and shared.</p></div>
+      <div class="card"><h3>Remixable</h3><p>Runs, levels, and moments players can remix in social contexts.</p></div>
+      <div class="card"><h3>Creator-driven</h3><p>Hooks that let creators and communities shape what gets played.</p></div>
+      <div class="card"><h3>Characters across channels</h3><p>AI characters that carry their personality and memory beyond one screen.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="conti" class="alt">
+  <div class="wrap split">
+    <div>
+      <div class="eyebrow">Flagship</div>
+      <h2>Conti</h2>
+      <div><span class="tag on">Windows build exported</span><span class="tag">Private beta next</span><span class="tag">Isometric</span><span class="tag">Godot</span></div>
+      <p class="sub" style="margin-top:12px">Our first title: an isometric indie game and the proving ground for our AI-first pipeline. A Windows build is exported, and we&rsquo;re preparing a small private beta.</p>
+    </div>
+    <ul class="road" aria-label="Roadmap">
+      <li class="now"><small>Next</small><h4>Conti private beta</h4><p>Invite-only Windows beta for real player feedback.</p></li>
+      <li><small>Then</small><h4>Agentic NPCs &amp; adaptive play</h4><p>AI-driven characters with memory and an AI director tuning each session.</p></li>
+      <li><small>Then</small><h4>Creator community</h4><p>Open the doors for creators and players to shape and remix.</p></li>
+      <li><small>Later</small><h4>Social platform launches</h4><p>Feed-native games and AI characters on social platforms.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="join" id="join">
+  <div class="wrap">
+    <div class="box">
+      <div class="eyebrow">Private beta</div>
+      <h2>Play what we&rsquo;re building.</h2>
+      <p class="sub">Want early access to Conti and our agentic game experiments? Drop us a line and we&rsquo;ll reach out when beta slots open.</p>
+      <a class="btn btn-p" href="mailto:hello@skrlr.com?subject=Skrlr%20Games%20private%20beta">hello@skrlr.com &rarr;</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>&copy; 2026 Skrlr Games</span>
+    <span>AI-first games &middot; <a href="mailto:hello@skrlr.com">hello@skrlr.com</a></span>
+  </div>
+</footer>
+</body>
+</html>
