@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Skrlr Games — AI-first games studio</title>
-<meta name="description" content="Skrlr Games is an AI-first games studio building agentic game AI, adaptive games that tune themselves to every player, and games native to social platforms.">
+<meta name="description" content="Skrlr Games is an AI-first games studio building autonomous AI characters, adaptive games that tune themselves to every player, and games native to social platforms.">
 <meta property="og:title" content="Skrlr Games — AI-first games studio">
 <meta property="og:description" content="Agentic characters, adaptive play, and games built for the social feed.">
 <meta property="og:url" content="https://skrlr.com/">
@@ -68,23 +68,20 @@ h2{font-size:clamp(28px,4vw,42px);line-height:1.1;letter-spacing:-.025em;font-we
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px;align-items:center}
 .chips em{font-style:normal;font-size:13px;color:var(--mut);margin-right:4px}
 .chip{padding:6px 12px;border-radius:9px;border:1px solid var(--line);background:var(--card);font-size:13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
-.tag{display:inline-block;font-size:12px;font-weight:600;padding:4px 10px;border-radius:999px;border:1px solid var(--line);color:var(--mut);margin:0 6px 8px 0}
-.tag.on{color:#05040d;background:var(--b);border-color:var(--b)}
-.road{list-style:none;border:1px solid var(--line);border-radius:20px;padding:26px 26px 10px;background:rgba(5,4,13,.6)}
-.road li{position:relative;padding:0 0 18px 30px}
-.road li:before{content:"";position:absolute;left:0;top:5px;width:14px;height:14px;border-radius:50%;border:2px solid var(--a);background:var(--bg)}
-.road li:after{content:"";position:absolute;left:7px;top:22px;bottom:2px;width:2px;background:linear-gradient(var(--a),var(--b));opacity:.35}
-.road li:last-child:after{display:none}
-.road li.now:before{background:var(--b);border-color:var(--b);box-shadow:0 0 14px var(--b)}
+.road{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:36px}
+.road li{position:relative;padding:22px;border:1px solid var(--line);border-radius:18px;background:var(--card)}
+.road li.now{border-color:rgba(47,216,255,.45);background:linear-gradient(160deg,rgba(47,216,255,.12),rgba(192,60,255,.06))}
 .road small{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--b);font-weight:700}
-.road h4{font-size:16px;margin:2px 0}
+.road li.now small:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--b);box-shadow:0 0 10px var(--b);margin-right:7px;vertical-align:1px}
+.road h4{font-size:16px;margin:6px 0 4px}
 .road p{color:var(--mut);font-size:14px}
 .join{text-align:center}
 .join .box{border-radius:26px;padding:60px 28px;border:1px solid var(--line);background:radial-gradient(520px 260px at 50% 0%,rgba(192,60,255,.2),transparent 70%),var(--bg2)}
 .join .sub{margin:0 auto 28px}
 footer{border-top:1px solid var(--line);padding:30px 0;color:var(--mut);font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
-@media(max-width:860px){.links{display:none}.split{grid-template-columns:1fr}section{padding:64px 0}header{padding:24px 0 64px}}
+@media(max-width:860px){.links{display:none}.split{grid-template-columns:1fr}.road{grid-template-columns:1fr 1fr}section{padding:64px 0}header{padding:24px 0 64px}}
+@media(max-width:520px){.road{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -94,22 +91,22 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
     <a class="brand" href="#top">SKRLR <span>GAMES</span></a>
     <div class="links">
       <a href="#ai">Agentic AI</a>
-      <a href="#social">Social games</a>
-      <a href="#conti">Conti</a>
+      <a href="#social">Social</a>
+      <a href="#roadmap">Roadmap</a>
     </div>
-    <a class="btn btn-p" href="mailto:hello@skrlr.com?subject=Skrlr%20Games%20private%20beta">Join the beta</a>
+    <a class="btn btn-p" href="mailto:hello@skrlr.com?subject=Conti%20private%20beta">Request access</a>
   </div>
 </nav>
 
 <header id="top">
   <div class="wrap">
     <img class="logo" src="assets/skrlr-logo.jpg" width="800" height="450" alt="Skrlr Games logo">
-    <div class="pill"><span class="dot"></span>Conti private beta — coming soon</div>
+    <div class="pill"><span class="dot"></span>Conti is now in private beta</div>
     <h1>Games that <span class="g">think, remember,<br>and adapt</span> to you.</h1>
-    <p class="lead">Skrlr Games is an AI-first games studio. Our mission: make AI the core mechanic, not a bolt-on, with agentic characters that reason and act, games that tune themselves to every player, and play built natively for the social feed.</p>
+    <p class="lead">Skrlr Games is an AI-first games studio. We build worlds run by autonomous AI characters, games that tune themselves to every player, and experiences made for the social feed.</p>
     <div class="cta">
-      <a class="btn btn-p" href="mailto:hello@skrlr.com?subject=Skrlr%20Games%20private%20beta">Join the private beta &rarr;</a>
-      <a class="btn btn-g" href="#ai">What we&rsquo;re building</a>
+      <a class="btn btn-p" href="mailto:hello@skrlr.com?subject=Conti%20private%20beta">Request beta access &rarr;</a>
+      <a class="btn btn-g" href="#ai">Explore the studio</a>
     </div>
   </div>
 </header>
@@ -118,52 +115,48 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
   <div class="wrap">
     <div class="split">
       <div>
-        <div class="eyebrow">AI-first &middot; Agentic game AI</div>
+        <div class="eyebrow">Agentic game AI</div>
         <h2>Characters that <span class="g">reason, remember, and act.</span></h2>
-        <p class="sub">We design games from the ground up around AI. Our characters are driven by real AI agents that perceive the world, keep memories, form intentions, and act within the game&rsquo;s rules, so the world reacts to you instead of replaying a script.</p>
+        <p class="sub">Every Skrlr game is designed around AI from the first line. Our characters are driven by AI agents that perceive the world, retain memory, form intent, and act within the rules of play. The world responds to you, not to a script.</p>
       </div>
       <div class="loop" aria-label="Agent loop">
-        <div class="step"><b>PERCEIVE</b><p><strong>Read the world</strong>: game state, nearby characters, what you just did.</p></div>
-        <div class="step"><b>REMEMBER</b><p><strong>Keep a history</strong>: past encounters, promises, grudges, and favors.</p></div>
-        <div class="step"><b>REASON</b><p><strong>Decide</strong>: goals and personality shape plans that fit the moment.</p></div>
-        <div class="step"><b>ACT</b><p><strong>Change the world</strong>: actions are checked against game rules, so emergence stays playable.</p></div>
+        <div class="step"><b>PERCEIVE</b><p><strong>Read the world</strong>: game state, nearby characters, and every player action.</p></div>
+        <div class="step"><b>REMEMBER</b><p><strong>Retain history</strong>: encounters, alliances, rivalries, and promises kept or broken.</p></div>
+        <div class="step"><b>REASON</b><p><strong>Form intent</strong>: goals and personality drive plans that fit the moment.</p></div>
+        <div class="step"><b>ACT</b><p><strong>Shape the world</strong>: actions resolve through game rules, so emergent play stays tight.</p></div>
       </div>
     </div>
     <div class="feature">
-      <h3>Adaptive games that tune themselves to each player</h3>
-      <p>An AI director reads how you play and adjusts difficulty, pacing, story beats, and encounters as you go, aiming to keep every session in the sweet spot between challenge and flow, with tension when you&rsquo;re cruising and relief when you&rsquo;re stuck.</p>
+      <h3>Adaptive by design</h3>
+      <p>An AI director reads how each person plays and continuously tunes difficulty, pacing, story beats, and encounters, holding every session at the edge of challenge and flow.</p>
     </div>
-    <div class="chips"><em>How we build:</em><span class="chip">Claude &amp; LLM agents for code + design</span><span class="chip">Local GPU gen for art &amp; animation</span><span class="chip">Godot engine</span><span class="chip">Tiny team, fast iteration</span></div>
+    <div class="chips"><em>How we build:</em><span class="chip">Claude & LLM agents across code and design</span><span class="chip">Local GPU generation for art & animation</span><span class="chip">Godot</span><span class="chip">Agentic production pipeline</span></div>
   </div>
 </section>
 
 <section id="social">
   <div class="wrap">
     <div class="eyebrow">Social platform games</div>
-    <h2>Games that live <span class="g">where people already are.</span></h2>
-    <p class="sub">Built natively for feeds, chats, and creator communities, not ported to them as an afterthought.</p>
+    <h2>Built for <span class="g">the feed.</span></h2>
+    <p class="sub">Games native to social platforms: instant to start, made to be shared, and shaped by creators and their communities.</p>
     <div class="cards">
-      <div class="card"><h3>Short-session &amp; shareable</h3><p>Playable in moments, made to be clipped and shared.</p></div>
-      <div class="card"><h3>Remixable</h3><p>Runs, levels, and moments players can remix in social contexts.</p></div>
-      <div class="card"><h3>Creator-driven</h3><p>Hooks that let creators and communities shape what gets played.</p></div>
-      <div class="card"><h3>Characters across channels</h3><p>AI characters that carry their personality and memory beyond one screen.</p></div>
+      <div class="card"><h3>Instant sessions</h3><p>Drop in from a feed and play in seconds.</p></div>
+      <div class="card"><h3>Shareable & remixable</h3><p>Moments, runs, and levels designed to be clipped, shared, and remixed.</p></div>
+      <div class="card"><h3>Creator-led</h3><p>Built-in hooks that let creators and communities steer what gets played.</p></div>
+      <div class="card"><h3>Persistent characters</h3><p>AI characters whose personality and memory carry across channels.</p></div>
     </div>
   </div>
 </section>
 
-<section id="conti" class="alt">
-  <div class="wrap split">
-    <div>
-      <div class="eyebrow">Flagship</div>
-      <h2>Conti</h2>
-      <div><span class="tag on">Windows build exported</span><span class="tag">Private beta next</span><span class="tag">Isometric</span><span class="tag">Godot</span></div>
-      <p class="sub" style="margin-top:12px">Our first title: an isometric indie game and the proving ground for our AI-first pipeline. A Windows build is exported, and we&rsquo;re preparing a small private beta.</p>
-    </div>
-    <ul class="road" aria-label="Roadmap">
-      <li class="now"><small>Next</small><h4>Conti private beta</h4><p>Invite-only Windows beta for real player feedback.</p></li>
-      <li><small>Then</small><h4>Agentic NPCs &amp; adaptive play</h4><p>AI-driven characters with memory and an AI director tuning each session.</p></li>
-      <li><small>Then</small><h4>Creator community</h4><p>Open the doors for creators and players to shape and remix.</p></li>
-      <li><small>Later</small><h4>Social platform launches</h4><p>Feed-native games and AI characters on social platforms.</p></li>
+<section id="roadmap" class="alt">
+  <div class="wrap">
+    <div class="eyebrow">Roadmap</div>
+    <h2><span class="g">Conti</span>, our first title, is now in private beta.</h2>
+    <ul class="road">
+      <li class="now"><small>Now</small><h4>Conti private beta</h4><p>Invite-only access for early players.</p></li>
+      <li><small>Next</small><h4>Agentic NPCs & adaptive play</h4><p>Memory-driven characters and an AI director in every session.</p></li>
+      <li><small>Then</small><h4>Creator community</h4><p>Tools for creators and players to shape and remix.</p></li>
+      <li><small>Then</small><h4>Social platform launches</h4><p>Feed-native games and AI characters, where audiences already are.</p></li>
     </ul>
   </div>
 </section>
@@ -172,9 +165,9 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
   <div class="wrap">
     <div class="box">
       <div class="eyebrow">Private beta</div>
-      <h2>Play what we&rsquo;re building.</h2>
-      <p class="sub">Want early access to Conti and our agentic game experiments? Drop us a line and we&rsquo;ll reach out when beta slots open.</p>
-      <a class="btn btn-p" href="mailto:hello@skrlr.com?subject=Skrlr%20Games%20private%20beta">hello@skrlr.com &rarr;</a>
+      <h2>Play what&rsquo;s next.</h2>
+      <p class="sub">Request access to the Conti private beta and our upcoming agentic titles.</p>
+      <a class="btn btn-p" href="mailto:hello@skrlr.com?subject=Conti%20private%20beta">hello@skrlr.com &rarr;</a>
     </div>
   </div>
 </section>
