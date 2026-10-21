@@ -3,21 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Skrlr — Applied AI lab for fast, safe, local AI</title>
-<meta name="description" content="Skrlr is an applied AI lab making AI run fast, safely and cheaply on your own hardware: local inference speed-ups, small fine-tuned models, and safety and red-team research, proven in real products.">
+<title>Skrlr — AI safety &amp; security lab for agentic red-teaming</title>
+<meta name="description" content="Skrlr is an AI safety and security lab building an automated, sandboxed red-teaming and insider-threat simulation platform that stress-tests AI agents against prompt injection, data exfiltration, hijacking and social engineering before deployment.">
 <link rel="canonical" href="https://skrlr.com/">
 <meta property="og:site_name" content="Skrlr">
-<meta property="og:title" content="Skrlr — Applied AI lab for fast, safe, local AI">
-<meta property="og:description" content="Local AI speed-ups, small fine-tuned models, and safety and red-team research, applied across Skrlr Games, Security and Media.">
+<meta property="og:title" content="Skrlr — AI safety &amp; security lab for agentic red-teaming">
+<meta property="og:description" content="An automated, sandboxed red-teaming and insider-threat simulation platform for AI agents. Find prompt injection, exfiltration and hijacking before deployment.">
 <meta property="og:url" content="https://skrlr.com/">
 <meta property="og:type" content="website">
 <meta property="og:image" content="https://skrlr.com/assets/og-image.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Skrlr applied AI lab: fast, safe, local AI">
+<meta property="og:image:alt" content="Skrlr, AI safety and security lab: stress-test AI agents before deployment">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Skrlr — Applied AI lab for fast, safe, local AI">
-<meta name="twitter:description" content="Local AI speed-ups, small fine-tuned models, and safety and red-team research, proven in real products.">
+<meta name="twitter:title" content="Skrlr — AI safety &amp; security lab for agentic red-teaming">
+<meta name="twitter:description" content="An automated, sandboxed red-teaming and insider-threat simulation platform for AI agents. Find prompt injection, exfiltration and hijacking before deployment.">
 <meta name="twitter:image" content="https://skrlr.com/assets/og-image.png">
 <meta name="theme-color" content="#0e1014">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23c03cff'/%3E%3Cstop offset='1' stop-color='%232fd8ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='14' fill='%230e1014'/%3E%3Cpath d='M8 18 26 26 32 44 38 26 56 18 44 40 32 52 20 40z' fill='none' stroke='url(%23g)' stroke-width='4' stroke-linejoin='round'/%3E%3Cpath d='M24 31q8-6 16 0-8 6-16 0z' fill='url(%23g)'/%3E%3C/svg%3E">
@@ -28,12 +28,12 @@
   "name": "Skrlr",
   "url": "https://skrlr.com/",
   "logo": "https://skrlr.com/assets/skrlr-logo.jpg",
-  "description": "Applied AI lab making AI run fast, safely and cheaply on your own hardware.",
+  "description": "AI safety and security lab building an automated, sandboxed agentic red-teaming and insider-threat simulation platform for AI agents.",
   "email": "mailto:Matt@skrlr.com",
   "founder": {"@type": "Person", "name": "Matt", "email": "mailto:Matt@skrlr.com", "jobTitle": "Founder"},
   "subOrganization": [
-    {"@type": "Organization", "name": "Skrlr Games"},
     {"@type": "Organization", "name": "Skrlr Security"},
+    {"@type": "Organization", "name": "Skrlr Games"},
     {"@type": "Organization", "name": "Skrlr Media"}
   ]
 }
@@ -188,7 +188,32 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
   .brand small{display:none}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+/* v2 additions */
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:40px}
+.grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin-top:40px}
+.flow{display:grid;grid-template-columns:repeat(4,1fr);gap:0;margin-top:28px;border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--panel)}
+.flow div{padding:22px;border-right:1px solid var(--line)}
+.flow div:last-child{border-right:0}
+.flow b{display:block;font-family:var(--mono);font-size:12px;color:var(--c);letter-spacing:.12em;margin-bottom:8px}
+.flow h4{font-size:15px;font-weight:600;margin-bottom:6px}
+.flow p{color:var(--mut);font-size:14px}
+.note{margin-top:22px;color:var(--mut);font-size:15px;max-width:760px}
+.note b{color:var(--txt);font-weight:600}
+.minor{margin-top:20px;font-family:var(--mono);font-size:13px;color:var(--dim)}
+.status{list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:36px}
+.status li{padding:20px;border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.status li.now{border-color:rgba(69,217,255,.45)}
+.status small{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--dim);font-weight:600}
+.status li.now small{color:var(--c)}
+.status li.now small:before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--c);margin-right:7px;vertical-align:1px}
+.status h4{font-size:14.5px;margin:6px 0 4px;font-weight:600}
+.status p{color:var(--mut);font-size:14px}
+.units{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:16px;margin-top:40px}
+.units .primary{border-color:rgba(69,217,255,.35)}
+@media(max-width:960px){.grid4,.status{grid-template-columns:1fr 1fr}.grid2,.units{grid-template-columns:1fr}.flow{grid-template-columns:1fr 1fr}.flow div:nth-child(2){border-right:0}.flow div:nth-child(-n+2){border-bottom:1px solid var(--line)}}
+@media(max-width:560px){.grid4,.status,.flow{grid-template-columns:1fr}.flow div{border-right:0;border-bottom:1px solid var(--line)}.flow div:last-child{border-bottom:0}}
 </style>
+
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
@@ -196,12 +221,13 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
   <div class="wrap">
     <a class="brand" href="#top" aria-label="Skrlr home">
       <svg viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c03cff"/><stop offset="1" stop-color="#2fd8ff"/></linearGradient></defs><path d="M8 18 26 26 32 44 38 26 56 18 44 40 32 52 20 40z" fill="none" stroke="url(#bg)" stroke-width="4" stroke-linejoin="round"/><path d="M24 31q8-6 16 0-8 6-16 0z" fill="url(#bg)"/></svg>
-      SKRLR <small>APPLIED AI LAB</small>
+      SKRLR <small>AI SAFETY &amp; SECURITY LAB</small>
     </a>
     <div class="links">
+      <a href="#platform">Platform</a>
       <a href="#research">Research</a>
+      <a href="#status">Status</a>
       <a href="#units">Units</a>
-      <a href="#games">Games</a>
       <a href="#about">About</a>
     </div>
     <a class="btn btn-g" href="#contact">Contact</a>
@@ -212,138 +238,127 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 <header id="top">
   <div class="wrap">
     <div>
-      <div class="eyebrow">Applied AI lab</div>
-      <h1>Fast, safe, affordable AI <span class="u">on your own hardware.</span></h1>
-      <p class="lead">Skrlr is an applied AI lab. We make models run quickly and cheaply on consumer and workstation GPUs, study how they fail, and prove the work by shipping real products in games, security and media.</p>
+      <div class="eyebrow">AI safety &amp; security lab</div>
+      <h1>Break your AI agents <span class="u">before attackers do.</span></h1>
+      <p class="lead">Skrlr is building an automated, sandboxed red-teaming and insider-threat simulation platform. It stress-tests AI agents against indirect prompt injection, data exfiltration, agent hijacking and multi-turn social engineering before they are deployed.</p>
       <div class="cta">
-        <a class="btn btn-p" href="#research">Explore the research &rarr;</a>
-        <a class="btn btn-g" href="mailto:Matt@skrlr.com?subject=Skrlr%20collaboration">Matt@skrlr.com</a>
+        <a class="btn btn-p" href="#platform">See the platform &rarr;</a>
+        <a class="btn btn-g" href="mailto:Matt@skrlr.com?subject=Skrlr%20platform%20early%20access">Request early access</a>
       </div>
     </div>
-    <div class="term" role="group" aria-label="Lab overview">
-      <div class="bar"><i></i><i></i><i></i><span>skrlr / lab.status</span></div>
+    <div class="term" role="group" aria-label="Platform overview">
+      <div class="bar"><i></i><i></i><i></i><span>skrlr / platform.status</span></div>
       <dl>
-        <dt>focus</dt><dd>local AI &middot; fine-tuning &middot; safety</dd>
-        <dt>runs on</dt><dd>consumer &amp; workstation GPUs</dd>
-        <dt>units</dt><dd>games &middot; security &middot; media</dd>
-        <dt>shipping</dt><dd><span class="mg">Conti</span> &mdash; <span class="ok">private beta</span></dd>
-        <dt>contact</dt><dd>Matt@skrlr.com<span class="cursor" aria-hidden="true"></span></dd>
+        <dt>product</dt><dd>agentic red-team &amp; eval platform</dd>
+        <dt>targets</dt><dd>AI agents with tools &amp; data access</dd>
+        <dt>sandbox</dt><dd>isolated mock environments</dd>
+        <dt>payloads</dt><dd>benign canary tokens</dd>
+        <dt>built on</dt><dd>open eval frameworks, e.g. <span class="mg">inspect_ai</span></dd>
+        <dt>stage</dt><dd><span class="ok">prototype in development</span><span class="cursor" aria-hidden="true"></span></dd>
       </dl>
     </div>
   </div>
 </header>
 
-<section id="research">
+<section id="platform">
   <div class="wrap">
-    <div class="eyebrow">Core research</div>
-    <h2>Three tracks, one goal: AI you can run and trust locally.</h2>
-    <p class="sub">Our research is practical and measured against real workloads, not leaderboards.</p>
-    <div class="grid3">
-      <div class="card top">
-        <div class="n">01 / SPEED</div>
-        <h3>Local inference speed-ups</h3>
-        <p>Getting more out of the hardware you already own.</p>
-        <ul><li>Quantization</li><li>Caching strategies</li><li>Runtime tuning for consumer &amp; workstation GPUs</li></ul>
-      </div>
-      <div class="card top">
-        <div class="n">02 / SPECIALIZE</div>
-        <h3>Fine-tuning</h3>
-        <p>Small, single-task models that do one job well at a fraction of the cost.</p>
-        <ul><li>Task-specific small models</li><li>LoRA adapters</li><li>Evaluation on the target task</li></ul>
-      </div>
-      <div class="card top">
-        <div class="n">03 / SAFETY</div>
-        <h3>Safety &amp; red-team frameworks</h3>
-        <p>Testing how models fail, and building the tools that catch it.</p>
-        <ul><li>Adversarial testing</li><li>Failure-mode analysis</li><li>Red-team tooling</li></ul>
-      </div>
+    <div class="eyebrow">The platform</div>
+    <h2>Test agents the way real attackers target them.</h2>
+    <p class="sub">AI agents now read email, browse the web, touch files and call tools. Each of those is an attack surface. Skrlr simulates those attacks safely and turns the results into repeatable evaluations.</p>
+    <div class="grid4">
+      <div class="card top"><div class="n">THREAT / 01</div><h3>Indirect prompt injection</h3><p>Hidden instructions in web pages, documents and messages that try to redirect what an agent does.</p></div>
+      <div class="card top"><div class="n">THREAT / 02</div><h3>Credential &amp; data exfiltration</h3><p>Attempts to leak secrets or sensitive data, measured with benign canary tokens instead of real data.</p></div>
+      <div class="card top"><div class="n">THREAT / 03</div><h3>Agent hijacking</h3><p>Taking over an agent&rsquo;s tools and permissions to perform actions the user never asked for.</p></div>
+      <div class="card top"><div class="n">THREAT / 04</div><h3>Multi-turn social engineering</h3><p>Phishing, pretexting and insider-threat scenarios that build pressure over a whole conversation.</p></div>
     </div>
+    <div class="flow" aria-label="How the platform works">
+      <div><b>01 SIMULATE</b><h4>Sandboxed environments</h4><p>Mock inboxes, chat, files and tools, fully isolated from real systems.</p></div>
+      <div><b>02 ATTACK</b><h4>Automated scenarios</h4><p>Adversarial and insider-threat scenarios run against the agent under test.</p></div>
+      <div><b>03 OBSERVE</b><h4>Tripwires &amp; canaries</h4><p>Canary tokens and tool-call monitors record exactly when an agent crosses a line.</p></div>
+      <div><b>04 EVALUATE</b><h4>Repeatable results</h4><p>Scored, reproducible evaluations to compare agents and catch regressions.</p></div>
+    </div>
+    <p class="note"><b>A product your team runs itself.</b> Skrlr is software: run evaluations as part of every release, not as a one-off audit.</p>
   </div>
 </section>
 
-<section id="fit" class="alt">
+<section id="research" class="alt">
   <div class="wrap">
-    <div class="eyebrow">How it fits</div>
-    <h2>Research and products feed each other.</h2>
-    <p class="sub">We apply our research in our own products. Running them in the real world keeps the research honest.</p>
-    <div class="loop">
-      <div class="card"><div class="n hl">SPEED</div><h3>Cheap to run</h3><p>Speed work makes products affordable to run on local hardware.</p></div>
-      <div class="arrow" aria-hidden="true">&rarr;</div>
-      <div class="card"><div class="n hl">PRODUCTS</div><h3>Real failures</h3><p>Shipping products surfaces real failures that feed safety and red-team research.</p></div>
-      <div class="arrow" aria-hidden="true">&rarr;</div>
-      <div class="card"><div class="n hl">SAFETY</div><h3>Credible lab</h3><p>Safety work makes the lab, and everything it ships, trustworthy.</p></div>
+    <div class="eyebrow">Research</div>
+    <h2>The research behind the platform.</h2>
+    <p class="sub">Our research is practical: every area feeds directly into how the platform tests agents.</p>
+    <div class="grid4">
+      <div class="card"><div class="n">01</div><h3>Agentic red-teaming &amp; evals</h3><p>Benchmarks and automated attack harnesses for tool-using agents, built on and compatible with open frameworks such as inspect_ai.</p></div>
+      <div class="card"><div class="n">02</div><h3>AI control &amp; sandboxing</h3><p>Containment, monitoring and tripwires that assume an agent may try to step outside its intended scope.</p></div>
+      <div class="card"><div class="n">03</div><h3>Safety research</h3><p>Studying how models fail under adversarial pressure, and building tools that detect those failures.</p></div>
+      <div class="card"><div class="n">04</div><h3>Fine-tuning &amp; model work</h3><p>Small, specialized models for attack generation, monitoring and scoring.</p></div>
     </div>
-    <p class="loopnote">&#8635; loop: speed &rarr; products &rarr; safety &rarr; speed</p>
+    <p class="minor">// supporting work: efficient inference, so large evaluation runs stay affordable.</p>
   </div>
 </section>
 
-<section id="units">
+<section id="status">
+  <div class="wrap">
+    <div class="eyebrow">Status</div>
+    <h2>Where things stand.</h2>
+    <p class="sub">Early and honest: here is what exists today and what comes next.</p>
+    <ul class="status">
+      <li class="now"><small>Now</small><h4>Benchmark &amp; eval prototype</h4><p>Agentic red-team and insider-threat scenarios in development.</p></li>
+      <li><small>Planned</small><h4>Open-source release</h4><p>Public release of the benchmark scenarios and evaluation code.</p></li>
+      <li><small>Planned</small><h4>Early access</h4><p>Hosted platform access for teams deploying AI agents.</p></li>
+      <li class="now"><small>Live testbed</small><h4>Conti private beta</h4><p>Our first game, where agent behavior is observed in real play.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section id="units" class="alt">
   <div class="wrap">
     <div class="eyebrow">Units</div>
-    <h2>Where the research ships.</h2>
-    <p class="sub">Each unit applies the lab&rsquo;s work to a real product area.</p>
-    <div class="grid3">
+    <h2>One lab, three units.</h2>
+    <p class="sub">Security is the core product. Games is a live testbed for agent behavior, and Media supports the lab and its products.</p>
+    <div class="units">
+      <div class="card primary top">
+        <div class="n">UNIT / SECURITY &middot; PRIMARY</div>
+        <h3>Skrlr Security</h3>
+        <p>The agentic red-teaming and insider-threat simulation platform: sandboxed, automated evaluations that find agent vulnerabilities before deployment.</p>
+        <span class="tag">Prototype in development</span>
+      </div>
       <div class="card">
         <div class="n">UNIT / GAMES</div>
         <h3>Skrlr Games</h3>
-        <p>AI-first, agentic and adaptive games, plus games built for social platforms.</p>
+        <p>AI-first adaptive games that serve as a live testbed for agent behavior.</p>
         <span class="tag m">Conti &middot; private beta</span>
         <p style="margin-top:12px"><a href="#games">See Skrlr Games &rarr;</a></p>
       </div>
       <div class="card">
-        <div class="n">UNIT / SECURITY</div>
-        <h3>Skrlr Security</h3>
-        <p>Cybersecurity and red-team tooling for teams running AI on their own infrastructure.</p>
-        <span class="tag">Red-team tooling</span>
-      </div>
-      <div class="card">
         <div class="n">UNIT / MEDIA</div>
         <h3>Skrlr Media</h3>
-        <p>Marketing and content pipelines built on efficient, locally run models.</p>
-        <span class="tag">Content pipelines</span>
+        <p>Marketing and content pipelines for the lab and its products.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="games" class="alt">
+<section id="games">
   <div class="wrap">
     <div class="games">
       <div>
-        <div class="eyebrow">Skrlr Games</div>
+        <div class="eyebrow">Skrlr Games &middot; testbed</div>
         <h2>Games that think, remember and adapt.</h2>
-        <p class="sub">Every Skrlr game is designed around AI from the start. Characters are driven by agents that perceive the world, keep memory, form intent and act within the rules of play. An AI director tunes difficulty, pacing and encounters to each player.</p>
+        <p class="sub">Skrlr Games builds AI-first, adaptive games and games made for social platforms. Characters are driven by agents that perceive, remember, reason and act within the rules of play. That makes every session a live look at how agents behave with real people.</p>
         <div class="steps" aria-label="Agent loop">
           <div class="step"><b>PERCEIVE</b><p><strong>Read the world:</strong> game state, nearby characters and player actions.</p></div>
           <div class="step"><b>REMEMBER</b><p><strong>Retain history:</strong> encounters, alliances, rivalries and promises.</p></div>
           <div class="step"><b>REASON</b><p><strong>Form intent:</strong> goals and personality drive plans that fit the moment.</p></div>
           <div class="step"><b>ACT</b><p><strong>Shape the world:</strong> actions resolve through game rules, so emergent play stays tight.</p></div>
         </div>
+        <p style="margin-top:24px"><a class="btn btn-g" href="mailto:Matt@skrlr.com?subject=Conti%20private%20beta">Request Conti beta access &rarr;</a></p>
       </div>
       <img class="logo" src="assets/skrlr-logo.jpg" width="800" height="450" loading="lazy" alt="Skrlr Games logo: a neon magenta and cyan winged emblem above the words SKRLR GAMES">
     </div>
-
-    <h3 class="sub2">Built for the feed</h3>
-    <div class="cards4">
-      <div class="card"><h4>Instant sessions</h4><p>Drop in from a feed and play in seconds.</p></div>
-      <div class="card"><h4>Shareable &amp; remixable</h4><p>Moments, runs and levels made to be clipped, shared and remixed.</p></div>
-      <div class="card"><h4>Creator-led</h4><p>Hooks that let creators and communities steer what gets played.</p></div>
-      <div class="card"><h4>Persistent characters</h4><p>AI characters whose personality and memory carry across channels.</p></div>
-    </div>
-
-    <h3 class="sub2">Roadmap</h3>
-    <ul class="road">
-      <li class="now"><small>Now</small><h4>Conti private beta</h4><p>Invite-only access for early players.</p></li>
-      <li><small>Next</small><h4>Agentic NPCs &amp; adaptive play</h4><p>Memory-driven characters and an AI director in every session.</p></li>
-      <li><small>Then</small><h4>Creator community</h4><p>Tools for creators and players to shape and remix.</p></li>
-      <li><small>Then</small><h4>Social platform launches</h4><p>Feed-native games and AI characters, where audiences already are.</p></li>
-    </ul>
-    <div class="chips"><em>How we build:</em><span class="chip">LLM agents across code &amp; design</span><span class="chip">Local GPU generation for art &amp; animation</span><span class="chip">Godot</span><span class="chip">Agentic production pipeline</span></div>
-    <p style="margin-top:28px"><a class="btn btn-g" href="mailto:Matt@skrlr.com?subject=Conti%20private%20beta">Request Conti beta access &rarr;</a></p>
   </div>
 </section>
 
-<section id="about">
+<section id="about" class="alt">
   <div class="wrap">
     <div class="about">
       <div>
@@ -352,10 +367,10 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
         <p class="mono" style="color:var(--dim);font-size:14px">Founder, Skrlr</p>
       </div>
       <div class="body">
-        <p>Matt founded Skrlr to make capable AI practical to run on hardware people already own, and safe enough to trust there.</p>
-        <p>He comes from a <strong>security engineering</strong> background and now builds local AI, safety and red-team tooling, and AI-first games. That mix shapes the lab: performance work and adversarial testing go hand in hand.</p>
-        <!-- TODO: Add career highlights here (roles, projects, publications, talks). Only add verified facts. -->
-        <p class="placeholder">Security engineering background &mdash; details coming soon.</p>
+        <p>Matt founded Skrlr to make AI agents safe to deploy by testing them the way real attackers would.</p>
+        <p>He has a <strong>systems and security engineering</strong> background spanning security risk, social engineering and phishing defense, and insider-threat awareness. He now focuses on <strong>AI red teaming and agentic security evaluations</strong>.</p>
+        <!-- TODO: Add specific career highlights here (projects, publications, talks, open-source work). Only add verified facts. -->
+        <p class="placeholder">Career highlights &mdash; details coming soon.</p>
       </div>
     </div>
   </div>
@@ -368,9 +383,9 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
       <h2>Let&rsquo;s work together.</h2>
       <p class="sub">Collaborators, recruiters and partners: get in touch directly.</p>
       <div class="who">
-        <a href="mailto:Matt@skrlr.com?subject=Research%20collaboration"><b>Collaborators</b><span>Research, local AI and red-team projects</span></a>
+        <a href="mailto:Matt@skrlr.com?subject=Research%20collaboration"><b>Collaborators</b><span>Red-teaming, evals and AI safety research</span></a>
         <a href="mailto:Matt@skrlr.com?subject=Recruiting"><b>Recruiters</b><span>Roles and opportunities for Matt</span></a>
-        <a href="mailto:Matt@skrlr.com?subject=Partnership"><b>Partners</b><span>Startup programs, investors and pilots</span></a>
+        <a href="mailto:Matt@skrlr.com?subject=Partnership"><b>Partners</b><span>Startup programs, investors and early access</span></a>
       </div>
       <a class="mail" href="mailto:Matt@skrlr.com">Matt@skrlr.com &rarr;</a>
     </div>
@@ -380,8 +395,8 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 
 <footer>
   <div class="wrap">
-    <span>&copy; 2026 Skrlr &middot; Applied AI lab</span>
-    <span>Games &middot; Security &middot; Media &middot; <a href="mailto:Matt@skrlr.com">Matt@skrlr.com</a></span>
+    <span>&copy; 2026 Skrlr &middot; AI safety &amp; security lab</span>
+    <span>Security &middot; Games &middot; Media &middot; <a href="mailto:Matt@skrlr.com">Matt@skrlr.com</a></span>
   </div>
 </footer>
 </body>
