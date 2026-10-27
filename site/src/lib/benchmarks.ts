@@ -7,7 +7,8 @@ export function benchmarkSlug(entry: BenchmarkEntry): string {
 }
 
 export function formatValue(value: number | string, unit: string): string {
-  return `${value} ${unit}`;
+  const u = unit.trim();
+  return u ? `${value} ${u}` : String(value);
 }
 
 export function sortByDateDesc(a: BenchmarkEntry, b: BenchmarkEntry): number {

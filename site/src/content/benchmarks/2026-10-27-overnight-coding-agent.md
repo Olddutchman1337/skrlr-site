@@ -7,7 +7,7 @@ metric: "throughput & task outcome"
 value: 52
 unit: "tok/s (avg)"
 method: "Overnight autonomous coding run: Bonsai 27B local agent with tool access; metrics from run logs."
-caveats: "Different GPU class than video benchmarks; tests passed but product tasks did not; no claim of zero crashes."
+caveats: "Different GPU class than video benchmarks; tests passed but product tasks did not."
 outcome: "fail"
 tags: [agent, games]
 card_label: "OVERNIGHT AGENT · LESSON"
@@ -29,7 +29,7 @@ card_detail: "176/176 tests passed · game blank · 0/36 tasks"
 
 ## What went wrong
 
-Passing tests masked the actual goal. The harness checked functions; nobody checked whether anything rendered on screen or whether tasks moved. I am not claiming the run was stable end to end — only what the logs show above.
+Passing tests masked the actual goal. The harness checked functions; nobody checked whether anything rendered on screen or whether tasks moved.
 
 ## Lesson
 

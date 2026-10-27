@@ -1,11 +1,11 @@
 ---
 title: "Local LLM decode throughput"
 date: 2026-10-27
-hardware: "1× RTX 5090, power-capped 403 W"
+hardware: "Local rig"
 model_class: "llm"
 metric: "decode throughput"
-value: 199
-unit: "tok/s (~)"
+value: "~199"
+unit: "tok/s"
 method: "Measured decode phase with Qwen3.8-Flash-Next (IQ3_S quant) and speculative decoding enabled."
 caveats: "Decode only; prefill rate not published here; speed depends on speculative decoding acceptance."
 tags: [llm, local]
@@ -15,7 +15,7 @@ card_detail: "Qwen3.8-Flash-Next · IQ3_S · speculative decoding"
 
 ## Setup
 
-**Qwen3.8-Flash-Next** at **IQ3_S** quantization on the **5090** (**403 W** cap), with **speculative decoding** turned on for the runs behind this card.
+**Qwen3.8-Flash-Next** at **IQ3_S** quantization on a **local rig** (which GPU handled this run is not in the logs I am publishing), with **speculative decoding** turned on for the runs behind this card.
 
 ## What I measured
 
