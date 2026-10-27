@@ -12,6 +12,8 @@ jobs:
     defaults:
       run:
         working-directory: site
+    env:
+      SCRUB_DENYLIST: ${{ secrets.SCRUB_DENYLIST }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
