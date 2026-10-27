@@ -7,9 +7,9 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "node scripts/public-scrub-check.mjs && astro build",
+    "build": "node scripts/public-scrub-check.mjs source && astro build && node scripts/public-scrub-check.mjs dist",
     "preview": "astro preview",
-    "scrub": "node scripts/public-scrub-check.mjs",
+    "scrub": "node scripts/public-scrub-check.mjs source && node scripts/public-scrub-check.mjs dist",
     "screenshots": "node scripts/capture-screenshots.mjs",
     "astro": "astro"
   },

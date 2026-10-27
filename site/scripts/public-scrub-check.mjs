@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 /**
- * Public-safety scrub for site source (src/, public/). Denylist terms never appear in repo;
- * load from SCRUB_DENYLIST, SCRUB_DENYLIST_FILE, or gitignored .scrub-denylist.local.
+ * Public-safety scrub. Denylist terms never live in the repo.
+ * - source phase: regex on src/ + public/
+ * - dist phase: regex on site/dist HTML/XML + denylist on extracted publishable text only
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -9,14 +10,17 @@ import { fileURLToPath } from 'node:url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(__dirname, '..');
+const distRoot = path.join(siteRoot, 'dist');
 const LOCAL_DENYLIST = path.join(siteRoot, '.scrub-denylist.local');
 
-const SCAN_DIRS = ['src', 'public'].map((d) => path.join(siteRoot, d));
-const EXT = new Set(['.astro', '.md', '.css', '.js', '.mjs', '.ts', '.tsx', '.json', '.svg']);
+const phase = process.argv[2] === 'dist' ? 'dist' : 'source';
+
+const SOURCE_DIRS = ['src', 'public'].map((d) => path.join(siteRoot, d));
+const SOURCE_EXT = new Set(['.astro', '.md', '.css', '.js', '.mjs', '.ts', '.tsx', '.json', '.svg']);
+const DIST_EXT = new Set(['.html', '.xml']);
 
 const ALLOWED_EMAIL = /^Matt@skrlr\.com$/i;
 
-/** Lines that only touch public, approved identifiers (skip regex on whole line). */
 const LINE_ALLOW_PATTERNS = [
   /skrlr\.com/i,
   /x\.com\/therealskrlr/i,
@@ -59,11 +63,19 @@ function maskToken(token) {
   return token[0] + '*'.repeat(token.length - 1);
 }
 
+/** @returns {{ term: string, caseSensitive: boolean }[]} */
 function parseDenylistText(text) {
   return text
     .split('\n')
     .map((l) => l.trim())
-    .filter((l) => l && !l.startsWith('#'));
+    .filter((l) => l && !l.startsWith('#'))
+    .map((line) => {
+      if (line.startsWith('cs:')) {
+        return { term: line.slice(3).trim(), caseSensitive: true };
+      }
+      return { term: line, caseSensitive: false };
+    })
+    .filter((e) => e.term.length > 0);
 }
 
 function loadDenylistConfig() {
@@ -77,7 +89,11 @@ function loadDenylistConfig() {
   if (Object.prototype.hasOwnProperty.call(process.env, 'SCRUB_DENYLIST_FILE')) {
     const filePath = process.env.SCRUB_DENYLIST_FILE;
     if (!filePath || !fs.existsSync(filePath)) {
-      return { source: null, terms: [], error: 'SCRUB_DENYLIST_FILE is set but the file is missing or unreadable.' };
+      return {
+        source: null,
+        terms: [],
+        error: 'SCRUB_DENYLIST_FILE is set but the file is missing or unreadable.',
+      };
     }
     return {
       source: 'SCRUB_DENYLIST_FILE environment variable',
@@ -100,13 +116,16 @@ function loadDenylistConfig() {
   };
 }
 
-function denylistMatches(line, term) {
-  const t = term.trim();
+function denylistMatches(line, entry) {
+  const t = entry.term.trim();
   if (!t) return false;
-  if (/^\w+$/.test(t)) {
-    const re = new RegExp(`\\b${t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i');
-    return re.test(line);
+  const escaped = t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const shortOrWord = t.length <= 4 || /^\w+$/.test(t);
+  if (shortOrWord) {
+    const flags = entry.caseSensitive ? '' : 'i';
+    return new RegExp(`\\b${escaped}\\b`, flags).test(line);
   }
+  if (entry.caseSensitive) return line.includes(t);
   return line.toLowerCase().includes(t.toLowerCase());
 }
 
@@ -114,15 +133,15 @@ function lineIsAllowlisted(line) {
   return LINE_ALLOW_PATTERNS.some((re) => re.test(line));
 }
 
-function walk(dir, files = []) {
+function walk(dir, extSet, files = []) {
   if (!fs.existsSync(dir)) return files;
   for (const name of fs.readdirSync(dir)) {
     const full = path.join(dir, name);
     const st = fs.statSync(full);
     if (st.isDirectory()) {
-      if (name === 'node_modules' || name === 'dist' || name === '.astro') continue;
-      walk(full, files);
-    } else if (EXT.has(path.extname(name))) {
+      if (name === 'node_modules' || name === '.astro') continue;
+      walk(full, extSet, files);
+    } else if (extSet.has(path.extname(name))) {
       files.push(full);
     }
   }
@@ -180,37 +199,25 @@ function findOtherRules(line) {
   return hits;
 }
 
-function checkDenylist(line, terms) {
-  const hits = [];
-  for (const term of terms) {
-    if (denylistMatches(line, term)) {
-      hits.push({ kind: 'denylist term', raw: term });
-    }
+function checkRegexLine(line) {
+  if (lineIsAllowlisted(line) && !line.match(IPV4)) {
+    return [];
   }
-  return hits;
+  return [
+    ...findIpv4Matches(line),
+    ...findEmails(line),
+    ...findHostPorts(line),
+    ...findOtherRules(line),
+  ];
 }
 
-function checkFile(filePath, terms) {
-  const rel = path.relative(siteRoot, filePath);
+function checkFileRegex(filePath, relRoot) {
+  const rel = path.relative(relRoot, filePath);
   const lines = fs.readFileSync(filePath, 'utf8').split('\n');
   const hits = [];
 
   lines.forEach((line, i) => {
-    if (lineIsAllowlisted(line) && !line.match(IPV4)) {
-      // still scan for denylist on allowlisted lines
-      for (const h of checkDenylist(line, terms)) {
-        hits.push({ rel, line: i + 1, ...h });
-      }
-      return;
-    }
-
-    for (const h of [
-      ...findIpv4Matches(line),
-      ...findEmails(line),
-      ...findHostPorts(line),
-      ...findOtherRules(line),
-      ...checkDenylist(line, terms),
-    ]) {
+    for (const h of checkRegexLine(line)) {
       hits.push({ rel, line: i + 1, ...h });
     }
   });
@@ -218,50 +225,158 @@ function checkFile(filePath, terms) {
   return hits;
 }
 
-const allowEmpty = process.env.SCRUB_ALLOW_EMPTY === '1';
-const config = loadDenylistConfig();
+function checkDenylistLine(line, terms) {
+  const hits = [];
+  for (const entry of terms) {
+    if (denylistMatches(line, entry)) {
+      hits.push({ kind: 'denylist term', raw: entry.term });
+    }
+  }
+  return hits;
+}
 
-if (config.error && !config.source) {
-  if (allowEmpty) {
-    console.warn('⚠️  WARNING: public-scrub-check has NO denylist source (SCRUB_ALLOW_EMPTY=1).');
-    console.warn('⚠️  For local preview only — do not ship or merge without a real denylist.');
-  } else {
+/**
+ * Publishable strings from built HTML/XML — no tag names or markup.
+ */
+function extractPublishableLines(content, ext) {
+  const lines = [];
+  let body = content;
+
+  if (ext === '.html') {
+    body = body
+      .replace(/<script[\s\S]*?<\/script>/gi, '\n')
+      .replace(/<style[\s\S]*?<\/style>/gi, '\n');
+
+    const attrRe =
+      /\b(alt|title|href|content)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/gi;
+    for (const m of body.matchAll(attrRe)) {
+      const val = m[2] || m[3] || m[4] || '';
+      if (val.trim()) lines.push(val.trim());
+    }
+
+    const visible = body.replace(/<[^>]+>/g, '\n');
+    for (const chunk of visible.split('\n')) {
+      const t = chunk.replace(/\s+/g, ' ').trim();
+      if (t) lines.push(t);
+    }
+  } else if (ext === '.xml') {
+    const attrRe = /\b(title|href|description|link)\s*=\s*(?:"([^"]*)"|'([^']*)')/gi;
+    for (const m of body.matchAll(attrRe)) {
+      const val = m[2] || m[3] || '';
+      if (val.trim()) lines.push(val.trim());
+    }
+    const inner = body.replace(/<[^>]+>/g, '\n');
+    for (const chunk of inner.split('\n')) {
+      const t = chunk.replace(/\s+/g, ' ').trim();
+      if (t) lines.push(t);
+    }
+  }
+
+  return lines;
+}
+
+function checkDistFileDenylist(filePath, terms) {
+  const rel = path.relative(siteRoot, filePath);
+  const ext = path.extname(filePath);
+  const publishable = extractPublishableLines(fs.readFileSync(filePath, 'utf8'), ext);
+  const hits = [];
+
+  publishable.forEach((line, idx) => {
+    for (const h of checkDenylistLine(line, terms)) {
+      hits.push({ rel, line: idx + 1, segment: 'publishable-text', ...h });
+    }
+  });
+
+  return hits;
+}
+
+function resolveDenylistTerms() {
+  const allowEmpty = process.env.SCRUB_ALLOW_EMPTY === '1';
+  const config = loadDenylistConfig();
+
+  if (config.error && !config.source) {
+    if (allowEmpty) {
+      console.warn('⚠️  WARNING: public-scrub-check has NO denylist source (SCRUB_ALLOW_EMPTY=1).');
+      console.warn('⚠️  For local preview only — do not ship or merge without a real denylist.');
+      return { source: null, terms: [], allowEmpty: true };
+    }
     console.error(`public-scrub-check FAILED: ${config.error}`);
     process.exit(1);
   }
-}
 
-const source = config.source;
-const terms = config.source ? config.terms : [];
+  const { source, terms } = config;
 
-if (terms.length === 0 && config.source) {
-  if (allowEmpty) {
-    console.warn(
-      '⚠️  WARNING: public-scrub-check running with an EMPTY denylist (SCRUB_ALLOW_EMPTY=1).',
-    );
-    console.warn('⚠️  For local preview only — do not ship or merge without a real denylist.');
-  } else {
+  if (terms.length === 0 && source) {
+    if (allowEmpty) {
+      console.warn(
+        '⚠️  WARNING: public-scrub-check running with an EMPTY denylist (SCRUB_ALLOW_EMPTY=1).',
+      );
+      console.warn('⚠️  For local preview only — do not ship or merge without a real denylist.');
+      return { source, terms: [], allowEmpty: true };
+    }
     console.error(
       `public-scrub-check FAILED: denylist from ${source} is empty. Add terms or set SCRUB_ALLOW_EMPTY=1 for local preview only (see site/README.md).`,
     );
     process.exit(1);
   }
+
+  return { source, terms, allowEmpty: false };
 }
 
-const files = SCAN_DIRS.flatMap((d) => walk(d));
-const allHits = files.flatMap((f) => checkFile(f, terms));
-
-if (allHits.length) {
+function reportHits(allHits) {
   console.error('public-scrub-check FAILED:\n');
   for (const h of allHits) {
     const masked =
-      h.kind === 'denylist term' ? maskToken(h.raw) : h.raw.includes('***') ? h.raw : maskToken(h.raw);
-    console.error(`  ${h.rel}:${h.line} [${h.kind}] hit: ${masked}`);
+      h.kind === 'denylist term'
+        ? maskToken(h.raw)
+        : h.raw.includes('***')
+          ? h.raw
+          : maskToken(h.raw);
+    const loc = h.segment ? `${h.rel} (publishable #${h.line})` : `${h.rel}:${h.line}`;
+    console.error(`  ${loc} [${h.kind}] hit: ${masked}`);
   }
   process.exit(1);
 }
 
-const sourceLabel = source ?? (allowEmpty ? 'none (SCRUB_ALLOW_EMPTY override)' : 'unknown');
-console.log(
-  `public-scrub-check OK (${files.length} files scanned, ${terms.length} denylist terms, source: ${sourceLabel})`,
-);
+function runSourcePhase() {
+  const files = SOURCE_DIRS.flatMap((d) => walk(d, SOURCE_EXT));
+  const allHits = files.flatMap((f) => checkFileRegex(f, siteRoot));
+
+  if (allHits.length) {
+    reportHits(allHits);
+  }
+
+  console.log(`public-scrub-check source OK (${files.length} files, regex only)`);
+}
+
+function runDistPhase() {
+  if (!fs.existsSync(distRoot)) {
+    console.error(
+      'public-scrub-check FAILED: site/dist not found. Run astro build before the dist scrub phase.',
+    );
+    process.exit(1);
+  }
+
+  const { source, terms, allowEmpty } = resolveDenylistTerms();
+  const files = walk(distRoot, DIST_EXT);
+  const regexHits = files.flatMap((f) => checkFileRegex(f, siteRoot));
+  const denyHits =
+    terms.length > 0 ? files.flatMap((f) => checkDistFileDenylist(f, terms)) : [];
+  const allHits = [...regexHits, ...denyHits];
+
+  if (allHits.length) {
+    reportHits(allHits);
+  }
+
+  const sourceLabel =
+    source ?? (allowEmpty ? 'none (SCRUB_ALLOW_EMPTY override)' : 'unknown');
+  console.log(
+    `public-scrub-check dist OK (${files.length} built files, ${terms.length} denylist terms on publishable text only, source: ${sourceLabel})`,
+  );
+}
+
+if (phase === 'dist') {
+  runDistPhase();
+} else {
+  runSourcePhase();
+}

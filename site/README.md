@@ -16,6 +16,19 @@ If no source is configured or the list is empty, `npm run scrub` and `npm run bu
 
 Output never prints denylist contents — only term **count** and **which source** was used. Matches show a **masked** hit (first character + asterisks).
 
+**Where denylist runs:** After `astro build`, terms are matched against **publishable text only** — visible copy and selected attributes (`alt`, `title`, `href`, `content`) extracted from `site/dist` HTML and RSS/XML, with markup stripped. Tag names (e.g. heading tags), raw markup, `package-lock.json`, and `node_modules` are **not** scanned for denylist terms. Generic regex rules still run on **source** (`src/`, `public/`) and **built output** (`site/dist`).
+
+**Per-line options:** Prefix a line with `cs:` for **case-sensitive** matching. Default is case-insensitive. Short terms use whole-word matching so they do not match inside unrelated words.
+
+Example secret / local file (placeholders only):
+
+```
+example-host
+cs:XX
+```
+
+(`cs:XX` means the literal token `XX` must match case exactly — use for short codes that would otherwise collide with markup if scanned naively.)
+
 ### Owner setup
 
 **GitHub Actions (required for PR CI to pass)**
@@ -42,6 +55,8 @@ example-internal-name
 Replace with the same real terms you use in the secret.
 
 Generic regex checks (private IP ranges, suspicious ports, ssh patterns, etc.) live in `scripts/public-scrub-check.mjs` and are safe to commit.
+
+`npm run build` runs: source regex → Astro build → dist regex + denylist on publishable text. `npm run scrub` expects an existing `site/dist` (run build first).
 
 ## Run locally
 
