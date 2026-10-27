@@ -1,0 +1,26 @@
+name: site-v2 check
+
+on:
+  pull_request:
+    paths:
+      - 'site/**'
+      - '.github/workflows/site-v2-check.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: site
+    env:
+      SCRUB_DENYLIST: ${{ secrets.SCRUB_DENYLIST }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: site/.nvmrc
+          check-latest: true
+          cache: npm
+          cache-dependency-path: site/package-lock.json
+      - run: npm ci
+      - run: npm run build

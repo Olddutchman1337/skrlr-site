@@ -1,7 +1,9 @@
 # Skrlr
 
-Landing site for [skrlr.com](https://skrlr.com) — Skrlr, an independent AI safety & security research lab. We study how AI agents fail under adversarial pressure (indirect prompt injection, data exfiltration, agent hijacking, multi-turn social engineering) and build sandboxed evaluation environments, benchmarks and open tooling for agentic red-teaming. Areas: Skrlr Security (core research), Skrlr Games (AI-first adaptive games as a live testbed for agent behavior) and Skrlr Media.
+[skrlr.com](https://skrlr.com) — **Skrlr AI Lab**: local AI benchmarks and research (first), agent security evals (second).
 
-Static single page (`index.html`, inline CSS, no build step) served by GitHub Pages from `main` / root with custom domain `skrlr.com` (see `CNAME`).
+**Live site:** static files at the **repository root** on `main`, served by GitHub Pages with custom domain `skrlr.com` (`CNAME`, `.nojekyll`).
+
+**Source:** [`site/`](site/README.md) (Astro). Run `cd site && npm run build` to rebuild and sync output to the repo root before merging.
 
 Contact: Matt@skrlr.com

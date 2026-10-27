@@ -1,0 +1,37 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Hardware / Lab"
+  description="What runs in the Skrlr AI Lab — GPU classes, power caps, and workloads without network or infrastructure details."
+  path="/lab/"
+>
+  <header class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow">Hardware / Lab</p>
+      <h1>Rigs, caps, and what runs where.</h1>
+      <p class="hero-lead">
+        I publish GPU class and power limits so numbers are reproducible in spirit — not hostnames, topology,
+        or anything that maps to my home network.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="stat-grid">
+        <div class="stat-card" style="pointer-events:none">
+          <span class="label">PRIMARY INFERENCE</span>
+          <p class="value">RTX 5090</p>
+          <p class="detail">Power cap 403 W · video &amp; image benchmarks (per logged runs)</p>
+        </div>
+        <div class="stat-card" style="pointer-events:none">
+          <span class="label">AGENT / CODEX RIG</span>
+          <p class="value">RTX 4070 SUPER</p>
+          <p class="detail">12 GB · overnight coding agent runs (see failure card)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

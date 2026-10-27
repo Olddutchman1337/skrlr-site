@@ -1,0 +1,26 @@
+---
+import type { BenchmarkEntry } from '../lib/benchmarks';
+import { benchmarkSlug, formatValue, cardLabel, cardDetail } from '../lib/benchmarks';
+
+interface Props {
+  entry: BenchmarkEntry;
+}
+
+const { entry } = Astro.props;
+const slug = benchmarkSlug(entry);
+const { value, unit, compare, outcome } = entry.data;
+const fail = outcome === 'fail' || outcome === 'mixed';
+---
+
+<a class:list={['stat-card', { fail }]} href={`/benchmarks/${slug}/`}>
+  <span class="label">{cardLabel(entry)}</span>
+  <p class="value">{formatValue(value, unit)}</p>
+  <p class="detail">{cardDetail(entry)}</p>
+  {
+    compare && (
+      <p class="compare">
+        vs {compare.label}: {formatValue(compare.value, compare.unit)}
+      </p>
+    )
+  }
+</a>

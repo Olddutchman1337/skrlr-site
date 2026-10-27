@@ -1,0 +1,42 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import StatCard from '../../components/StatCard.astro';
+import { getCollection } from 'astro:content';
+import { sortByDateDesc } from '../../lib/benchmarks';
+
+const benchmarks = (await getCollection('benchmarks')).sort(sortByDateDesc);
+const classes = [...new Set(benchmarks.map((b) => b.data.model_class))].sort();
+const filter = Astro.url.searchParams.get('class');
+const filtered = filter
+  ? benchmarks.filter((b) => b.data.model_class === filter)
+  : benchmarks;
+---
+
+<BaseLayout
+  title="Benchmarks"
+  description="Local AI benchmark cards with methods and caveats — LLM, image, video, upscale, agents, and system metrics from Skrlr AI Lab."
+  path="/benchmarks/"
+>
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-label">Benchmarks / Research</p>
+        <h2>All cards.</h2>
+        <p>Filter by model class. Each entry is markdown with a schema-checked front matter — missing caveats fail the build.</p>
+      </div>
+      <div class="filter-bar" aria-label="Filter by model class">
+        <a class:list={['chip', { active: !filter }]} href="/benchmarks/">All</a>
+        {
+          classes.map((c) => (
+            <a class:list={['chip', { active: filter === c }]} href={`/benchmarks/?class=${c}`}>
+              {c}
+            </a>
+          ))
+        }
+      </div>
+      <div class="stat-grid cols-3">
+        {filtered.map((entry) => <StatCard entry={entry} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

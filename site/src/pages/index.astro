@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import StatCard from '../components/StatCard.astro';
+import { getCollection } from 'astro:content';
+import { sortByDateDesc } from '../lib/benchmarks';
+
+const benchmarks = (await getCollection('benchmarks')).sort(sortByDateDesc);
+const featured = benchmarks.filter((b) => b.id !== '2026-10-27-overnight-coding-agent');
+const failure = benchmarks.find((b) => b.id === '2026-10-27-overnight-coding-agent');
+---
+
+<BaseLayout
+  title="Skrlr AI Lab"
+  description="I run frontier-class models on my own hardware and publish the numbers — wins, failures, and caveats. Local AI benchmarking and research first; agent security evals second."
+  path="/"
+>
+  <header class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow">Skrlr AI Lab</p>
+      <h1>I benchmark local AI on real rigs and post the receipts.</h1>
+      <p class="hero-lead">
+        Benchmarks and agent experiments measured on my hardware — with units, conditions, and
+        honest failures. Security evals are part of the lab, not the whole story.
+      </p>
+      <div class="hero-cta">
+        <a class="btn btn-primary" href="https://x.com/therealskrlr" rel="noopener noreferrer"
+          >Follow lab notes on X →</a
+        >
+        <a class="btn btn-ghost" href="/benchmarks/">See benchmarks</a>
+      </div>
+      <p class="mono" style="margin-top:20px;font-size:12px;color:var(--accent-dim)">
+        One RTX 5090 · power capped at 403 W
+      </p>
+    </div>
+  </header>
+
+  <section class="section" id="numbers">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-label">Latest numbers</p>
+        <h2>From the logs.</h2>
+        <p>Every card links to method and caveats. The summary is on the grid; the write-up is the receipt.</p>
+      </div>
+      <div class="stat-grid cols-3">
+        {featured.map((entry) => <StatCard entry={entry} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="what-we-test">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-label">What I test</p>
+        <h2>Three lanes in the lab.</h2>
+      </div>
+      <div class="tile-grid">
+        <div class="tile">
+          <p class="section-label">01 · Local inference</p>
+          <h3>LLM, image, video</h3>
+          <p>tok/s decode, text-to-image latency, video drafts vs finals, upscale passes — always with hardware and power cap noted.</p>
+        </div>
+        <div class="tile">
+          <p class="section-label">02 · Agents</p>
+          <h3>Overnight coding runs</h3>
+          <p>Tool use, iteration counts, and whether the artifact actually shipped — including runs where tests passed and the product did not.</p>
+        </div>
+        <div class="tile">
+          <p class="section-label">03 · Security</p>
+          <h3>Agent red-teaming</h3>
+          <p>Prompt injection, exfiltration, hijacking, and multi-turn social engineering in sandboxed evals. <a href="/security/">Program →</a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  {
+    failure && (
+      <section class="section" id="failures">
+        <div class="wrap">
+          <div class="section-head">
+            <p class="section-label">Failures I publish</p>
+            <h2>Green tests, blank game.</h2>
+            <p>Passing CI is not the product. This run is the tone I want for the lab.</p>
+          </div>
+          <div class="failure-feature">
+            <StatCard entry={failure} />
+            <div>
+              <p class="big">
+                <em>176/176 tests passed.</em> The game came out blank. <em>0/36</em> tasks done.
+              </p>
+              <p style="color:var(--text-muted);margin-top:14px;font-size:15px">
+                Bonsai 27B on a 12 GB RTX 4070 SUPER: 52 tok/s avg, 27 iterations, 1,146 tool calls.
+              </p>
+              <p style="margin-top:16px">
+                <a href={`/benchmarks/${failure.id.replace(/\.md$/, '')}/`}>Read the full write-up →</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section section-alt" id="follow">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="section-label">Follow along</p>
+        <h2>Lab notes on X.</h2>
+        <p>No embeds — just links. New benchmark write-ups hit RSS.</p>
+      </div>
+      <ul class="x-links">
+        <li>
+          <a href="https://x.com/therealskrlr" rel="noopener noreferrer">@therealskrlr — profile</a>
+        </li>
+        <li>
+          <a href="https://x.com/therealskrlr" rel="noopener noreferrer">Latest posts (open on X)</a>
+        </li>
+      </ul>
+      <p style="margin-top:20px;font-family:var(--mono);font-size:13px;color:var(--text-dim)">
+        RSS: <a href="/rss.xml">/rss.xml</a> · Contact: <a href="mailto:Matt@skrlr.com">Matt@skrlr.com</a>
+      </p>
+    </div>
+  </section>
+</BaseLayout>

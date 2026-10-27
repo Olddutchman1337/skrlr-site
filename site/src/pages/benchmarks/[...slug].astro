@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection, render } from 'astro:content';
+import { benchmarkSlug, formatValue } from '../../lib/benchmarks';
+
+export async function getStaticPaths() {
+  const entries = await getCollection('benchmarks');
+  return entries.map((entry) => ({
+    params: { slug: benchmarkSlug(entry) },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const slug = benchmarkSlug(entry);
+const d = entry.data;
+---
+
+<BaseLayout title={d.title} description={`${d.title} — ${formatValue(d.value, d.unit)}. ${d.caveats}`} path={`/benchmarks/${slug}/`}>
+  <article>
+    <header class="bench-header">
+      <div class="wrap">
+        <p class="section-label">{d.model_class}</p>
+        <h1>{d.title}</h1>
+        <div class="bench-meta">
+          <span>{d.date.toISOString().slice(0, 10)}</span>
+          <span>{d.hardware}</span>
+          {d.outcome && <span>Outcome: {d.outcome}</span>}
+        </div>
+        <div class="bench-hero-num">
+          <p class="metric-label">{d.metric}</p>
+          <p class="metric-value">{formatValue(d.value, d.unit)}</p>
+          {
+            d.compare && (
+              <p class="metric-sub">
+                Compare — {d.compare.label}: {formatValue(d.compare.value, d.compare.unit)}
+              </p>
+            )
+          }
+        </div>
+      </div>
+    </header>
+    <section class="section">
+      <div class="wrap prose">
+        <Content />
+        <dl class="meta-block">
+          <dt>Method</dt>
+          <dd>{d.method}</dd>
+          <dt>Caveats</dt>
+          <dd>{d.caveats}</dd>
+        </dl>
+        <p style="margin-top:2rem">
+          <a href="/benchmarks/">← All benchmarks</a>
+        </p>
+      </div>
+    </section>
+  </article>
+</BaseLayout>
