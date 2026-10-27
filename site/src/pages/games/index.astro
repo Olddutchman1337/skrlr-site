@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Game Dev"
+  description="AI-assisted game projects as a smaller testbed in Skrlr AI Lab — agent loops, playtesting, and honest postmortems."
+  path="/games/"
+>
+  <header class="hero">
+    <div class="wrap">
+      <p class="hero-eyebrow">Game Dev · smaller lane</p>
+      <h1>Games as a live agent testbed.</h1>
+      <p class="hero-lead">
+        Adaptive games give me a place to watch agents perceive, remember, reason, and act under real player
+        pressure — and to publish when automation misses the mark.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="wrap prose">
+      <h2>Agent loop in play</h2>
+      <p><strong>Perceive</strong> — game state, nearby characters, player actions.</p>
+      <p><strong>Remember</strong> — encounters, alliances, and promises across sessions.</p>
+      <p><strong>Reason</strong> — goals and personality that fit the moment.</p>
+      <p><strong>Act</strong> — moves resolved through game rules so emergent play stays bounded.</p>
+      <p>
+        The overnight Bonsai run that shipped a blank build is documented under
+        <a href="/benchmarks/2026-10-27-overnight-coding-agent/">benchmarks</a> — that is the honesty bar
+        for this lane too.
+      </p>
+      <p class="placeholder-block">
+        [PLACEHOLDER] Public game project page — title, screenshots, and playtest notes when ready.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

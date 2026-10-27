@@ -1,0 +1,77 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  path?: string;
+}
+
+const { title, description, path = Astro.url.pathname } = Astro.props;
+const fullTitle = title === 'Skrlr AI Lab' ? title : `${title} · Skrlr AI Lab`;
+
+const nav = [
+  { href: '/benchmarks/', label: 'Benchmarks', match: /^\/benchmarks/ },
+  { href: '/security/', label: 'Security', match: /^\/security/ },
+  { href: '/lab/', label: 'Hardware / Lab', match: /^\/lab/ },
+  { href: '/games/', label: 'Game Dev', match: /^\/games/ },
+  { href: '/about/', label: 'About', match: /^\/about/ },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={`https://skrlr.com${path}`} />
+    <meta name="theme-color" content="#07090c" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <meta property="og:site_name" content="Skrlr AI Lab" />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={`https://skrlr.com${path}`} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <link rel="alternate" type="application/rss+xml" title="Skrlr benchmark notes" href="/rss.xml" />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <nav class="site-nav" aria-label="Primary">
+      <div class="wrap">
+        <a class="brand" href="/">
+          SKRLR <small>AI LAB</small>
+        </a>
+        <div class="nav-links">
+          {
+            nav.map((item) => (
+              <a
+                href={item.href}
+                aria-current={item.match.test(path) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            ))
+          }
+        </div>
+        <a class="btn btn-ghost" href="https://x.com/therealskrlr" rel="noopener noreferrer"
+          >@therealskrlr</a
+        >
+      </div>
+    </nav>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <span>Real numbers from the logs.</span>
+        <span>
+          <a href="https://x.com/therealskrlr" rel="noopener noreferrer">@therealskrlr</a>
+          · <a href="/rss.xml">RSS</a> · <a href="mailto:Matt@skrlr.com">Matt@skrlr.com</a>
+        </span>
+      </div>
+    </footer>
+  </body>
+</html>
