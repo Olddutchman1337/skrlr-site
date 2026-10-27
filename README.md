@@ -1,9 +1,9 @@
 # Skrlr
 
-Landing site for [skrlr.com](https://skrlr.com).
+[skrlr.com](https://skrlr.com) — **Skrlr AI Lab**: local AI benchmarks and research (first), agent security evals (second).
 
-**Production (`main`):** static single page (`index.html`, inline CSS, no build step) served by GitHub Pages from the repo root with custom domain `skrlr.com` (see `CNAME`). Do not overwrite from automated jobs.
+**Live site:** static files at the **repository root** on `main`, served by GitHub Pages with custom domain `skrlr.com` (`CNAME`, `.nojekyll`).
 
-**Preview (`v2` branch):** Astro static site under [`site/`](site/README.md) — *Skrlr AI Lab* (benchmarks first, security second). Build output is `site/dist/` only. Open a draft PR from `v2` → `main` to review; cutover steps are documented in `site/README.md`.
+**Source:** [`site/`](site/README.md) (Astro). Run `cd site && npm run build` to rebuild and sync output to the repo root before merging.
 
 Contact: Matt@skrlr.com

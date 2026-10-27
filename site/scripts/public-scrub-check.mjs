@@ -11,9 +11,12 @@ import { fileURLToPath } from 'node:url';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const siteRoot = path.resolve(__dirname, '..');
 const distRoot = path.join(siteRoot, 'dist');
+const repoRoot = path.resolve(siteRoot, '..');
+const SERVED_SKIP_DIRS = new Set(['site', '.git', '.github', 'artifacts', 'node_modules']);
 const LOCAL_DENYLIST = path.join(siteRoot, '.scrub-denylist.local');
 
-const phase = process.argv[2] === 'dist' ? 'dist' : 'source';
+const phaseArg = process.argv[2] ?? 'source';
+const phase = phaseArg === 'served' ? 'served' : 'source';
 
 const SOURCE_DIRS = ['src', 'public'].map((d) => path.join(siteRoot, d));
 const SOURCE_EXT = new Set(['.astro', '.md', '.css', '.js', '.mjs', '.ts', '.tsx', '.json', '.svg']);
@@ -145,15 +148,30 @@ function lineIsAllowlisted(line) {
   return LINE_ALLOW_PATTERNS.some((re) => re.test(line));
 }
 
-function walk(dir, extSet, files = []) {
+function walk(dir, extSet, files = [], skipDirNames = new Set(['node_modules', '.astro'])) {
   if (!fs.existsSync(dir)) return files;
   for (const name of fs.readdirSync(dir)) {
     const full = path.join(dir, name);
     const st = fs.statSync(full);
     if (st.isDirectory()) {
-      if (name === 'node_modules' || name === '.astro') continue;
-      walk(full, extSet, files);
+      if (skipDirNames.has(name)) continue;
+      walk(full, extSet, files, skipDirNames);
     } else if (extSet.has(path.extname(name))) {
+      files.push(full);
+    }
+  }
+  return files;
+}
+
+function walkServed(dir, files = []) {
+  if (!fs.existsSync(dir)) return files;
+  for (const name of fs.readdirSync(dir)) {
+    if (SERVED_SKIP_DIRS.has(name)) continue;
+    const full = path.join(dir, name);
+    const st = fs.statSync(full);
+    if (st.isDirectory()) {
+      walkServed(full, files);
+    } else if (DIST_EXT.has(path.extname(name))) {
       files.push(full);
     }
   }
@@ -287,8 +305,8 @@ function extractPublishableLines(content, ext) {
   return lines;
 }
 
-function checkDistFileDenylist(filePath, terms) {
-  const rel = path.relative(siteRoot, filePath);
+function checkDistFileDenylist(filePath, terms, relRoot = siteRoot) {
+  const rel = path.relative(relRoot, filePath);
   const ext = path.extname(filePath);
   const publishable = extractPublishableLines(fs.readFileSync(filePath, 'utf8'), ext);
   const hits = [];
@@ -364,19 +382,22 @@ function runSourcePhase() {
   console.log(`public-scrub-check source OK (${files.length} files, regex scan)`);
 }
 
-function runDistPhase() {
-  if (!fs.existsSync(distRoot)) {
+function runServedPhase() {
+  const indexAtRoot = path.join(repoRoot, 'index.html');
+  if (!fs.existsSync(indexAtRoot)) {
     console.error(
-      'public-scrub-check FAILED: site/dist not found. Run astro build before the dist scrub phase.',
+      'public-scrub-check FAILED: repo root index.html not found. Run astro build and sync-root first.',
     );
     process.exit(1);
   }
 
   const { terms } = resolveDenylistTerms();
-  const files = walk(distRoot, DIST_EXT);
-  const regexHits = files.flatMap((f) => checkFileRegex(f, siteRoot));
+  const files = walkServed(repoRoot);
+  const regexHits = files.flatMap((f) => checkFileRegex(f, repoRoot));
   const denyHits =
-    terms.length > 0 ? files.flatMap((f) => checkDistFileDenylist(f, terms)) : [];
+    terms.length > 0
+      ? files.flatMap((f) => checkDistFileDenylist(f, terms, repoRoot))
+      : [];
   const allHits = [...regexHits, ...denyHits];
 
   if (allHits.length) {
@@ -384,12 +405,12 @@ function runDistPhase() {
   }
 
   console.log(
-    `public-scrub-check dist OK (${files.length} built files, ${denyHits.length} denylist hits)`,
+    `public-scrub-check served OK (${files.length} root files, ${denyHits.length} denylist hits)`,
   );
 }
 
-if (phase === 'dist') {
-  runDistPhase();
+if (phase === 'served') {
+  runServedPhase();
 } else {
   runSourcePhase();
 }

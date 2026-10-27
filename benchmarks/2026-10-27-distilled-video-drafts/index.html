@@ -1,0 +1,34 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Distilled video model: drafts vs finals · Skrlr AI Lab</title><meta name="description" content="Distilled video model: drafts vs finals — 38 s (median). Draft and final differ in steps, resolution, and frame count — not an apples-to-apples speedup multiplier."><link rel="canonical" href="https://skrlr.com/benchmarks/2026-10-27-distilled-video-drafts/"><meta name="theme-color" content="#07090c"><link rel="icon" href="/favicon.svg" type="image/svg+xml"><meta property="og:site_name" content="Skrlr AI Lab"><meta property="og:title" content="Distilled video model: drafts vs finals · Skrlr AI Lab"><meta property="og:description" content="Distilled video model: drafts vs finals — 38 s (median). Draft and final differ in steps, resolution, and frame count — not an apples-to-apples speedup multiplier."><meta property="og:url" content="https://skrlr.com/benchmarks/2026-10-27-distilled-video-drafts/"><meta property="og:type" content="website"><meta name="twitter:card" content="summary"><link rel="alternate" type="application/rss+xml" title="Skrlr benchmark notes" href="/rss.xml"><link rel="stylesheet" href="/_astro/BaseLayout.DaotTd4W.css"></head><body><a class="skip" href="#main">Skip to content</a><nav class="site-nav" aria-label="Primary"><div class="wrap"><a class="brand" href="/">SKRLR <small>AI LAB</small></a><div class="nav-links"><a href="/benchmarks/" aria-current="page">Benchmarks</a><a href="/security/">Security</a><a href="/lab/">Hardware / Lab</a><a href="/about/">About</a></div><a class="btn btn-ghost" href="https://x.com/therealskrlr" rel="noopener noreferrer">@therealskrlr</a></div></nav><main id="main"><article><header class="bench-header"><div class="wrap"><p class="section-label">video-gen</p><h1>Distilled video model: drafts vs finals</h1><div class="bench-meta"><span>2026-10-27</span><span>1× RTX 5090, power-capped 403 W</span></div><div class="bench-hero-num"><p class="metric-label">wall-clock (draft pass)</p><p class="metric-value">38 s (median)</p><p class="metric-sub">Compare — full 20-step final: 320 s (median)</p></div></div></header><section class="section"><div class="wrap prose"><h2 id="setup">Setup</h2>
+<p>I use a <strong>distilled video model</strong> (internal name stays private) in two modes on the same <strong>RTX 5090</strong> at <strong>403 W</strong>:</p>
+<ul>
+<li><strong>Draft:</strong> 8-step, <strong>107 frames</strong> at <strong>768×448</strong></li>
+<li><strong>Final:</strong> full 20-step, <strong>124 frames</strong> at <strong>1344×768</strong></li>
+</ul>
+<h2 id="what-i-measured">What I measured</h2>
+<p>Median wall-clock from production logs for each mode separately.</p>
+<h2 id="numbers">Numbers</h2>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Median wall-clock</th>
+<th>Conditions</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Draft</td>
+<td><strong>38 s</strong></td>
+<td>8-step · 107 frames · 768×448</td>
+</tr>
+<tr>
+<td>Final</td>
+<td><strong>320 s</strong></td>
+<td>20-step · 124 frames · 1344×768</td>
+</tr>
+</tbody>
+</table>
+<p>Draft is how I iterate; final is what I ship when the motion looks right. The ~8× gap is <strong>not</strong> a clean speedup number — resolution, steps, and frame count all move at once.</p>
+<h2 id="whats-next">What’s next</h2>
+<p>Hold frame count fixed for one A/B so the draft savings are honest to compare.</p>
+<dl class="meta-block"><dt>Method</dt><dd>Median over logged draft jobs (8-step) vs separate final renders (20-step); single GPU.</dd><dt>Caveats</dt><dd>Draft and final differ in steps, resolution, and frame count — not an apples-to-apples speedup multiplier.</dd></dl><p style="margin-top:2rem"><a href="/benchmarks/">← All benchmarks</a></p></div></section></article></main><footer class="site-footer"><div class="wrap"><span>Real numbers from the logs.</span><span><a href="https://x.com/therealskrlr" rel="noopener noreferrer">@therealskrlr</a>· <a href="/rss.xml">RSS</a> · <a href="mailto:Matt@skrlr.com">Matt@skrlr.com</a></span></div></footer></body></html>
