@@ -67,8 +67,8 @@ function maskToken(token) {
 function parseDenylistText(text) {
   return text
     .split('\n')
-    .map((l) => l.trim())
-    .filter((l) => l && !l.startsWith('#'))
+    .map((l) => l.replace(/\r$/, '').trim())
+    .filter((l) => l.length > 0 && !l.startsWith('#'))
     .map((line) => {
       if (line.startsWith('cs:')) {
         return { term: line.slice(3).trim(), caseSensitive: true };
@@ -76,6 +76,18 @@ function parseDenylistText(text) {
       return { term: line, caseSensitive: false };
     })
     .filter((e) => e.term.length > 0);
+}
+
+function denylistSourceLabel(longSource) {
+  if (!longSource) return 'none';
+  if (longSource.includes('SCRUB_DENYLIST environment')) return 'env';
+  if (longSource.includes('SCRUB_DENYLIST_FILE')) return 'file';
+  if (longSource.includes('gitignored')) return 'local';
+  return 'unknown';
+}
+
+function logDenylistLoaded(count, longSource) {
+  console.log(`denylist: ${count} terms loaded (source: ${denylistSourceLabel(longSource)})`);
 }
 
 function loadDenylistConfig() {
@@ -320,6 +332,7 @@ function resolveDenylistTerms() {
     process.exit(1);
   }
 
+  logDenylistLoaded(terms.length, source);
   return { source, terms, allowEmpty: false };
 }
 
@@ -339,6 +352,8 @@ function reportHits(allHits) {
 }
 
 function runSourcePhase() {
+  resolveDenylistTerms();
+
   const files = SOURCE_DIRS.flatMap((d) => walk(d, SOURCE_EXT));
   const allHits = files.flatMap((f) => checkFileRegex(f, siteRoot));
 
@@ -346,7 +361,7 @@ function runSourcePhase() {
     reportHits(allHits);
   }
 
-  console.log(`public-scrub-check source OK (${files.length} files, regex only)`);
+  console.log(`public-scrub-check source OK (${files.length} files, regex scan)`);
 }
 
 function runDistPhase() {
@@ -357,7 +372,7 @@ function runDistPhase() {
     process.exit(1);
   }
 
-  const { source, terms, allowEmpty } = resolveDenylistTerms();
+  const { terms } = resolveDenylistTerms();
   const files = walk(distRoot, DIST_EXT);
   const regexHits = files.flatMap((f) => checkFileRegex(f, siteRoot));
   const denyHits =
@@ -368,10 +383,8 @@ function runDistPhase() {
     reportHits(allHits);
   }
 
-  const sourceLabel =
-    source ?? (allowEmpty ? 'none (SCRUB_ALLOW_EMPTY override)' : 'unknown');
   console.log(
-    `public-scrub-check dist OK (${files.length} built files, ${terms.length} denylist terms on publishable text only, source: ${sourceLabel})`,
+    `public-scrub-check dist OK (${files.length} built files, ${denyHits.length} denylist hits)`,
   );
 }
 
